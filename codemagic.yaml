@@ -1,0 +1,22 @@
+workflows:
+  ios-workflow:
+    name: iOS Build IPA
+    environment:
+      node: latest
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install
+      - name: Build IPA
+        script: |
+          cd ios
+          xcode-project build-ipa \
+            --workspace "tvtshop.xcworkspace" \
+            --scheme "tvtshop"
+    artifacts:
+      - build/ios/ipa/*.ipa
